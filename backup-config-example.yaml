@@ -43,6 +43,7 @@ email-report: true
 report-to: you@yourdomain.com
 report-success-subject: Routine Backups Completed
 report-error-subject: BACKUPS REPORTED AN ERROR!
+report-skipped-subject: (some items disabled in config)
 report-from: backups@yourdomain.com
 smtp-server: smtp.yourdomain.com
 smtp-user:

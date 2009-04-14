@@ -9,7 +9,10 @@ It was originally written by Samuel Goldstein and the original can be found
 on his website http://www.fogbound.net/archives/2008/01/03/backups-updated-again/
 (assuming he has fixed his permalinks by  now :-)
 
-Robert Berger added basic mechanism to use Amazon S3 as a duplicity backup destination
+Robert Berger (http://blog.ibd.com) added basic mechanism to use Amazon S3 
+as a duplicity backup destination
+
+Note that s3 is the default protocol now.
 
 It combines a lot of the functionality of these programs into an easily
 scheduled backup system that will do some end-to-end verifications, send
@@ -90,6 +93,9 @@ Installing
 - implement the security configuration described below
 
 - add backups.rb to your crontab
+
+- If using Amazon S3 get an account and your Secret Key ID and Secret Key
+from http://aws.amazon.com
 
 ---------------------------------------------------------------------------
 Security
