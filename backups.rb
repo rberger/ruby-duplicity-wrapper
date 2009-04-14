@@ -103,7 +103,7 @@ end
 
 def duplicity_dest_spec(thisBackup)
 	if is_local(thisBackup['destination'])
-		cmd = "file://"
+		cmd = "s3://"
 	else
 		thisBackup['destination']['protocol'] = thisBackup['destination']['protocol'] || "scp"
 		case thisBackup['destination']['protocol']
@@ -112,6 +112,10 @@ def duplicity_dest_spec(thisBackup)
 			when "ftp"
 				cmd = "ftp://"
 				ENV['FTP_PASSWORD']= thisBackup['destination']['password']
+			when "s3"
+			  cmd = "s3://"
+        ENV['AWS_ACCESS_KEY_ID']=thisBackup['destination']['duplicity-aws-access-key-id'] if thisBackup['destination']['duplicity-aws-access-key-id']
+        ENV['AWS_SECRET_ACCESS_KEY']=thisBackup['destination']['duplicity-aws-secret-access-key'] if thisBackup['destination']['duplicity-aws-secret-access-key']
 		end
 	end
 	cmd
@@ -131,7 +135,7 @@ def backup_duplicity(thisBackup, config)
 end
 
 def cleanup_duplicity(thisBackup, config)
- 	cmd = "#{config['duplicity-command']} #{thisBackup['duplicity-cleanup-flags']} --force --remove-older-than  #{thisBackup['preserve']} "
+ 	cmd = "#{config['duplicity-command']} #{thisBackup['duplicity-cleanup-flags']} --force remove-older-than  #{thisBackup['preserve']} "
 	cmd += duplicity_dest_spec(thisBackup)
 	ENV['PASSPHRASE'] = thisBackup['destination']['pgp_passphrase']
 	cmd += target_string_base(thisBackup['destination']) if ! is_local(thisBackup['destination'])

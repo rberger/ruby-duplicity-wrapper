@@ -5,6 +5,12 @@ README.txt  -  backups.rb
 Backups.rb is a easily-configured wrapper for doing server-based backups
 using rdiff-backup and duplicity.
 
+It was originally written by Samuel Goldstein and the original can be found 
+on his website http://www.fogbound.net/archives/2008/01/03/backups-updated-again/
+(assuming he has fixed his permalinks by  now :-)
+
+Robert Berger added basic mechanism to use Amazon S3 as a duplicity backup destination
+
 It combines a lot of the functionality of these programs into an easily
 scheduled backup system that will do some end-to-end verifications, send
 email reports, more!
@@ -25,7 +31,7 @@ an earlier version of it, should you so choose.
 
 duplicity can backup from the local machine to any local or remote
 destination. It does not require anything to be installed on the
-destination other than a daemon that will accept connections, e.g., ftp or
+destination other than a daemon that will accept connections, e.g., s3, ftp or
 scp. Duplicity keeps revisions like rdiff-backup, and can also encrypt
 the data, so you can store your backups safely on an untrustworthy
 server.
@@ -39,6 +45,7 @@ host3 is some unknown server where we have an ftp account.
 We want to backup host1 and host2 on host3.
 
 We could either:
+- run backups.rb on any host and use duplicity to back them up to S3
 - run backups.rb on both host1 and host2, and use duplicity to back them
   up to host3.
 - run backups.rb on host1, use rdiff-backup to keep a copy of host2 on

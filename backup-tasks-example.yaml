@@ -1,5 +1,25 @@
 ---
 -
+   name: Local Backup to Amazon S3 with no pgp encryption
+   backup-engine: duplicity
+   source:
+      # source *must* be local for duplicity
+      location: local
+      directory: /tmp/
+   destination:
+      directory: runa-backup/intrepid-test
+      protocol: s3
+      # Its probably better to set your Amazon key id as a shell variable AWS_ACCESS_KEY_ID
+      duplicity-aws-access-key-id: <You can put your Amazon EC2 access key id here>
+      # Its probably better to set your Amazon secret access key as a shell variable AWS_SECRET_ACCESS_KEY
+      duplicity-aws-secret-access-key: <You can put your Amazon EC2 access key here>
+      pgp-passphrase: I actually am a pgp passphrase
+   preserve: 6M
+   disabled: false
+   roundtrip-test: false
+   verify-signatures: false
+   duplicity-backup-flags: --no-encryption
+-
    name: My home directory on Host1
    backup-engine: rdiff-backup
    source:
