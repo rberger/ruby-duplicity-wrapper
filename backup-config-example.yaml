@@ -1,0 +1,98 @@
+#--------------------------------------------------------------------
+#configure ssh
+#--------------------------------------------------------------------
+ssh-command: /usr/bin/ssh
+
+#--------------------------------------------------------------------
+# Configure rdiff-backup
+#--------------------------------------------------------------------
+rdiff-command: /usr/bin/rdiff-backup
+rdiff-backup-flags:
+rdiff-restore-flags:
+rdiff-verify-flags:
+rdiff-cleanup-flags:
+
+#--------------------------------------------------------------------
+# configure duplicity
+#--------------------------------------------------------------------
+duplicity-command: /usr/bin/duplicity
+duplicity-backup-flags:
+duplicity-restore-flags:
+duplicity-verify-flags:
+duplicity-cleanup-flags:
+
+#--------------------------------------------------------------------
+# Runtime Settings
+#--------------------------------------------------------------------
+# How long to preserve revisions (see rdiff-backup or duplicity man page)
+global-preserve: 6M
+
+# be verbose when running?
+verbose: true
+
+# Just display commands, don't actually execute them
+testing: false
+
+# Echo the commands before executing them. Useful for debugging
+echo-commands: false
+
+#--------------------------------------------------------------------
+# Send an email report upon completion?
+#--------------------------------------------------------------------
+email-report: true
+report-to: you@yourdomain.com
+report-success-subject: Routine Backups Completed
+report-error-subject: BACKUPS REPORTED AN ERROR!
+report-from: backups@yourdomain.com
+smtp-server: smtp.yourdomain.com
+smtp-user:
+smtp-password:
+smtp-helo-domain:
+
+#--------------------------------------------------------------------
+# Predefine some locations. These are named servers. For each one,
+# you can preconfigure a set of parameters:
+#
+# host, directory, protocol, username, password, pgp-passphrase,
+# exclude
+#
+#--------------------------------------------------------------------
+locations:
+   local:
+      host: local
+      # "host: local" is magic and not exactly the same as localhost; it means
+      #  use the filesystem rather than a remore protocol
+   host1:
+      host: host1.yourdomain.com
+      pgp-passphrase: t0p s3cret!
+   host2:
+      host: host2.yourotherdomain.com
+#--------------------------------------------------------------------
+# Option Sets can be used to create named collections of options
+# for use in the backup-tasks.yaml file. An option set may pre-
+# configure the following options:
+#
+# name, backup-engine, source (and any subset of source options),
+# destination (and any subset of destination options), preserve,
+# pre-src, pre-dest, post-src, post-dest, verify-signatures,
+# roundtrip-test, disabled, rdiff-backup-flags, rdiff-restore-flags,
+# rdiff-verify-flags, rdiff-cleanup-flags, duplicity-backup-flags,
+# duplicity-restore-flags, duplicity-verify-flags,
+# duplicity-cleanup-flags
+#
+# Note:
+# Options specified in an option set will be overridden by
+# specifications set in the backup-tasks.yaml
+#--------------------------------------------------------------------
+option-sets:
+   set1:
+      # note that verify-signitures is not implemented in the stable
+      # version of rdiff-backup, but *is* in the current development version
+      verify-signatures: false
+      roundtrip-test: true
+      disabled: false
+   set2:
+      duplicity-backup-flags: --no-encryption
+      duplicity-restore-flags: --no-encryption
+      duplicity-cleanup-flags: --no-encryption
+      verify-signatures: false

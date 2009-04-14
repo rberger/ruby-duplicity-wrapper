@@ -1,0 +1,57 @@
+---
+-
+   name: My home directory on Host1
+   backup-engine: rdiff-backup
+   source:
+      location: host1
+      directory: /home/me
+      exclude: /home/me/.ssh /home/me/tmp
+   destination:
+      location: local
+      directory: /backups/host1/home/me
+   preserve: 6M
+   option-set: set1
+-
+   name: My home directory on Host2
+   backup-engine: rdiff-backup
+   source:
+      location: host2
+      directory: /home/me
+   destination:
+      location: local
+      directory: /backups/host2/home/me
+   preserve: 6M
+   verify-signatures: false
+   roundtrip-test: false
+# skip this whole operation
+   disabled: true
+-
+   name: Database Backup on Host 1
+   backup-engine: rdiff-backup
+   source:
+      location: host1
+      directory: /var/lib/mysql
+   destination:
+      location: local
+      directory: /backups/host1/databases
+   pre-src: "'mysqldump --all-databases --user=root --password=super_secret > /var/lib/mysql/backup/nightly.sql'"
+   post-dest: "rm /var/lib/mysql/backup/nightly.sql"
+   option-set: set1
+-
+   name: Local Chain to SomeFTPServer.com
+   backup-engine: duplicity
+   source:
+      # source *must* be local for duplicity
+      location: local
+      directory: /backups/host1/me
+   destination:
+      host: ftp.someserver.com
+      username: ftpuser
+      password: mypassword
+      directory: /backups
+      protocol: ftp
+      pgp-passphrase: I actually am a pgp passphrase
+   preserve: 6M
+   disabled: false
+   roundtrip-test: false
+   verify-signatures: false
