@@ -233,17 +233,18 @@ task_file = 'backup-tasks.yaml'
 $theReport = ""
 $success = true
 allitems = true
+config_over_rides = {}
 
 OptionParser.new do |opts|
 	opts.banner = "Usage: backups.rb [options]"
 	opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-		config['verbose'] = v
+		config_over_rides['verbose'] = v
 	end
 	opts.on("-b", "--backup-tasks task-file", "Backup task yaml file (default backup-tasks.yaml)") do |b|
 		task_file = b;
 	end
 	opts.on("-t", "--[no-]test", "Run in test mode (do not issue commands)") do |t|
-		config['testing'] = t
+		config_over_rides['testing'] = t
 	end
 	opts.on_tail("-h", "--help", "Show this message") do
 		puts opts
@@ -257,6 +258,7 @@ end.parse!
 
 begin
    config = YAML.load_file('backup-config.yaml')
+   config.merge!(config_over_rides)
    backups = YAML.load_file(task_file)
    
 
