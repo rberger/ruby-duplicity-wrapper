@@ -65,6 +65,7 @@ duplicity requires:
 - Python v2.2 or later
 - librsync v0.9.6 or later
 - GnuPG if you'll be doing encryption
+- python-boto 0.9d or later
 
 backups.rb requires:
 - Ruby (anything recent, recommend 1.8.5 or later)

@@ -93,7 +93,7 @@ def verify_signatures_rdiff_backup(thisBackup, config)
 end
 
 def cleanup_rdiff_backup(thisBackup, config)
- 	cmd = "#{config['rdiff-command']} #{thisBackup['rdiff-cleanup-flags']} --force --remove-older-than #{thisBackup['preserve']} "
+ 	cmd = "#{config['rdiff-command']} #{thisBackup['rdiff-cleanup-flags']} --force remove-older-than #{thisBackup['preserve']} "
 	cmd += target_string_base(thisBackup['destination'])+"::" if ! is_local(thisBackup['destination'])
 	cmd += "#{thisBackup['destination']['directory']}"
 	msg "Purging increments older that #{thisBackup['preserve']}" if config['verbose']
@@ -135,7 +135,7 @@ def backup_duplicity(thisBackup, config)
 end
 
 def cleanup_duplicity(thisBackup, config)
- 	cmd = "#{config['duplicity-command']} #{thisBackup['duplicity-cleanup-flags']} --force --remove-older-than  #{thisBackup['preserve']} "
+ 	cmd = "#{config['duplicity-command']} #{thisBackup['duplicity-cleanup-flags']} --force remove-older-than  #{thisBackup['preserve']} "
 	cmd += duplicity_dest_spec(thisBackup)
 	ENV['PASSPHRASE'] = thisBackup['destination']['pgp_passphrase']
 	cmd += target_string_base(thisBackup['destination']) if ! is_local(thisBackup['destination'])
