@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 #
 # rdiff-backup and duplicity wrapper script
 # SjG <samuel@1969web.com>

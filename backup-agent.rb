@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 #
 # backups.rb remote agent
 # SjG <samuel@1969web.com>
